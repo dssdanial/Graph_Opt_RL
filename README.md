@@ -1,4 +1,4 @@
-# Graph_Search_Brute_Force_algorithm
+# Graph Search Using Brute Force algorithm for exploring Train Conflictions
 Finding possible solutions for a train's resources used in conflict avoidance based on Graph theory and Brute Force algorithm.
 
 ## Brute Force Algorithm 
