@@ -4,6 +4,15 @@ Finding possible solutions for a train's resources used in conflict avoidance ba
 ## Brute Force Algorithm 
 The brute force algorithm is a straightforward approach to problem-solving that exhaustively checks all possible solutions to find the best or desired outcome. In our context of resolving resource conflicts, the algorithm systematically evaluates every combination of removing resources from a graph to identify a solution where no conflicts exist.
 
+## TimeTable 
+```
+| Train  | Source 1 | Source 2 | Source 3 | Source 4 | Departure Time | Arrival Time |
+|--------|----------|----------|----------|----------|----------------|--------------|
+| Train1 | 10:00    | 10:05    | 10:10    | 10:20    | -              | -            |
+| Train2 | -        | 10:00    | -        | 10:05    | -              | -            |
+| Train3 | -        | 10:30    | 10:35    | 10:20    | -              | -            |
+
+```
 
 
 ## Important Libraries Used
@@ -12,12 +21,9 @@ The brute force algorithm is a straightforward approach to problem-solving that 
 
 ## Solution and Explanation:
 Solution Finding Process:
-
 - **Graph Creation**:
   Utilizes NetworkX library to generate a graph based on resource occupancy during specific time intervals.
-  Adds nodes for resources with time intervals and connects resources shared by trains.
-
-  
+  Adds nodes for resources with time intervals and connects resources shared by trains. 
 - **Conflict Solution Search (Brute Force)**:
   Enumerates all combinations of resource removal (combinatorial brute force).
   Iterates through each combination to remove nodes and checks for conflicts.
