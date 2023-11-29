@@ -3,6 +3,11 @@ Finding possible solutions for a train's resources used in conflict avoidance ba
 
 ## Brute Force Algorithm 
 The brute force algorithm is a straightforward approach to problem-solving that exhaustively checks all possible solutions to find the best or desired outcome. In our context of resolving resource conflicts, the algorithm systematically evaluates every combination of removing resources from a graph to identify a solution where no conflicts exist.
+### Understanding Resource Usage by Trains:
+In the graph representation, each node (resource) has edges connecting it to other nodes. These edges represent conflicts when multiple trains use the same resource. You can associate trains with resources by observing the connections (edges) in the graph. If two resources have an edge between them, it indicates that the corresponding trains are using those resources. For instance, if there's an edge between source4 and source7, it means Train1 and Train2 are both using source4 and source7.
+
+### Finding a Solution to Resource Conflict:
+The solution to the resource conflict is to identify a subset of resources (nodes) in the graph where no two nodes in that subset share an edge (i.e., no conflict between resources in that subset). Using a brute force approach, you can iterate through all possible subsets of resources and check if removing those resources resolves all conflicts. If a subset is found where no nodes share an edge, it represents a solution that resolves resource conflicts among trains.
 
 ## TimeTable 
 ```
