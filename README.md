@@ -60,7 +60,7 @@ FUNCTION find_resource_conflict_solution(graph)
     IF is_found
         PRINT solution_nodes
     ELSE
-        PRINT " No solution found "
+        PRINT No solution found
 
 ```
 
