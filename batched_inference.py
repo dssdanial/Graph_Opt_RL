@@ -37,8 +37,8 @@ test_limit = int(sys.argv[3])
 size_str = str(train_limit) + "_" + str(test_limit)
 fh_r = open("er" + size_str + "_epsilondecay_e64_test_reward_p1" + str(batch_size) + ".txt", "w")
 
-fh0 = open("er_graph_" + str(train_limit) + "_10/10_" + str(train_limit) + "_info.txt", "r")
-fh1 = open("er_graph_" + str(test_limit) + "_10/10_" + str(test_limit) + "_info.txt", "r")
+fh0 = open("er_graph_" + "5_10/5_" + str(train_limit) + "_info.txt", "r")
+fh1 = open("er_graph_" + "5_10/5_" + str(test_limit) + "_info.txt", "r")
 
 lines0 = fh0.readlines()
 lines1 = fh1.readlines()
@@ -46,11 +46,12 @@ lines1 = fh1.readlines()
 # now need to create a greedy environment 
 num_embed_dim = 64
 
-total_episodes = 1500          # Total episodes
-test_steps = 500              # Max steps per episode
+total_episodes = 4         # Total episodes
+test_steps = 1              # Max steps per episode
 
 learning_rate = 0.000001      # Learning rate
 gamma = 0.9                   # Discounting rate
+
 
 # Exploration parameters
 epsilon = 0.1
@@ -87,8 +88,8 @@ for episode in range(total_episodes):
 
     random.seed(episode+hvd.rank()) 
 
-    graph_index = int(episode)%400
-    graph_name = "er_graph_" + str(train_limit) + "_410/" + lines0[graph_index].split()[0]
+    graph_index = int(episode)#%400
+    graph_name = "er_graph_" + "5_10/" + lines0[graph_index].split()[0]
     
     print(graph_name)
     env = Graph_env('min_cover_s2v', graph_name, num_embed_dim, train_limit)
@@ -228,12 +229,12 @@ for episode in range(total_episodes):
         test_total_rewards = deque(maxlen=10)
         done = False
         
-        for test_episode in range(0, 10):
+        for test_episode in range(0, 5):
             solution = []
             
             graph_index = int(test_episode)
-            graph_name = "er_graph_" + str(test_limit) + "_410/" + lines1[graph_index+400].split()[0]
-
+            graph_name = "er_graph_" + "5_10/" + lines1[graph_index].split()[0]
+            print(graph_name)
             test_env = Graph_env('min_cover_s2v', graph_name, num_embed_dim, test_limit)
             score = float("-inf")
             test_action = 0 
@@ -284,3 +285,4 @@ elapsed_time = time.time() - t
 print("Training time is " +  str(elapsed_time) + "for p " + str(hvd.rank()))
 print("Backward time is " +  str(backward_time) + "for p " + str(hvd.rank()))
 print("Testing time is " +  str(testing_time) + "for p " + str(hvd.rank()))
+

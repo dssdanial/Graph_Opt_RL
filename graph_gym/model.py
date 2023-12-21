@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import tensorflow as tf
+
 import numpy as np
 from collections import deque
 import copy
 import horovod.tensorflow as hvd
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 
 class Model:
     

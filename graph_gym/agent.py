@@ -8,6 +8,9 @@ import random
 from collections import deque
 from graph_gym.model import Model
 from graph_gym.agent_helper import * 
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
+
 
 class Graph_agent:
     

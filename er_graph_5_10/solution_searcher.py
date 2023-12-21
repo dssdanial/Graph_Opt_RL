@@ -9,13 +9,13 @@ from itertools import combinations, permutations
 score = float("inf")
 solution = []
 
-fh = open('410_50_info.txt', "r+")
-fh_solution = open('400_410_sol.txt', "w")
+fh = open('5_10_info.txt', "r+")
+fh_solution = open('5_10_sol.txt', "w")
 
 lines=fh.readlines()
 
-
-for graph_index in range(400,410):
+    
+for graph_index in range(0,5):
     print(graph_index)
     
     graph_name_str = lines[graph_index].split()[0]
@@ -58,3 +58,4 @@ for graph_index in range(400,410):
 
 fh_solution.close()
 fh.close()
+
