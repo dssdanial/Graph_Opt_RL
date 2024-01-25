@@ -11,11 +11,11 @@ The solution to the resource conflict is to identify a subset of resources (node
 
 ## TimeTable 
 ```
-| Train  | Source 1 | Source 2 | Source 3 | Source 4 | Departure Time | Arrival Time |
-|--------|----------|----------|----------|----------|----------------|--------------|
-| Train1 | 10:00    | 10:05    | 10:10    | 10:20    | -              | -            |
-| Train2 | -        | 10:00    | -        | 10:05    | -              | -            |
-| Train3 | -        | 10:30    | 10:35    | 10:20    | -              | -            |
+| Train | Source1            | Source2            | Source3            | Source4            | Source5            | Source6            | Source7            |
+|-------|--------------------|--------------------|--------------------|--------------------|--------------------|--------------------|--------------------|
+| Train1| 10:00 - 10:05      | -                  | 10:05 - 10:10      | 10:10 - 10:20      | -                  | -                  | 10:20 - 10:25      |
+| Train2| -                  | 10:00 - 10:05      | -                  | 10:05 - 10:15      | -                  | -                  | 10:15 - 10:20      |
+| Train3| -                  | 10:30 - 10:35      | 10:10 - 10:15      | 10:15 - 10:20      | 10:20 - 10:30      | 10:15 - 10:20      | -                  |
 
 ```
 
@@ -35,40 +35,55 @@ Solution Finding Process:
   If a combination resolves conflicts (no edges remain), record the solution nodes.
 
 ```Latex
-FUNCTION create_resource_graph(timetable)
-    resource_graph = CREATE_EMPTY_GRAPH()
-    FOR EACH train IN timetable
-        FOR EACH resource IN train
-            ADD_NODE(resource) TO resource_graph WITH time_interval ATTRIBUTE
-            ADD_EDGES_BETWEEN_RESOURCES IF SHARED BY TRAINS
-    RETURN resource_graph
+# Resource Hierarchy Conflict Detection
 
-FUNCTION find_resource_conflict_solution(graph)
-    nodes_list = GET_NODES_OF(graph)
-    GENERATE_ALL_COMBINATIONS_OF_NODES(nodes_list) INTO solutions_check
-    is_found = False
-    FOR EACH solution IN solutions_check
-        temp_graph = COPY(graph)
-        FOR EACH node IN solution
-            REMOVE_NODE(node) FROM temp_graph
-            IF NO_EDGES_LEFT_IN(temp_graph)
-                is_found = True
-                RECORD solution_nodes = solution
-                BREAK
-        IF is_found
-            BREAK
-    IF is_found
-        PRINT solution_nodes
-    ELSE
-        PRINT No solution found
+## Define Resource Hierarchy
+
+- Create an empty directed graph `resource_hierarchy`.
+
+## Add Resources to the Hierarchy
+
+For each train in the timetable:
+    For each resource in the train's schedule:
+        Add a node for the resource in `resource_hierarchy` with the train as an attribute.
+
+## Connect Resources in the Hierarchy
+
+For each train in the timetable:
+    For each pair of connected resources in the train's schedule:
+        Add a directed edge between the two resources in `resource_hierarchy` with the train as an attribute.
+
+## Detect Conflicts
+
+- Initialize an empty list `conflict_edges` to store edges with conflicts.
+
+For each edge in `resource_hierarchy.edges`:
+    Get the trains associated with the connected resources.
+    If the trains are different:
+        Add the edge to `conflict_edges` as a conflict.
+
+## Visualize the Resource Hierarchy
+
+- Visualize the resource hierarchy using a tree graph.
+- Highlight conflict edges in a different color.
+
+## Output Conflicts
+
+For each edge in `conflict_edges`:
+    Print details of the conflict, including the connected resources and associated trains.
+
 
 ```
 
 ## Result
 In a small network, we can generate graphs like this to be solved by different algorithms.
 
-![image](https://github.com/dssdanial/Graph_Search_Brute_Force_algorithm/assets/32397445/eaa75e60-c63e-42f5-ab03-6a9400352774)
+![Screenshot 2024-01-25 164417](https://github.com/dssdanial/Graph_Opt_RL/assets/32397445/d4488039-9b85-4e4a-ac62-04f62a3b1f2f)
 
 
 ## Conclusion
 However, while effective for smaller datasets, the brute force algorithm may become computationally intensive for larger graphs due to its exhaustive nature. Nonetheless, this approach ensures a comprehensive exploration of potential solutions, guaranteeing the identification of conflicts and providing valuable insights into resource utilization optimization.
+
+
+## Future Work
+Future work could involve scalability for larger graphs using techniques like **graph embeddings** and **Reinforcement Learning** Algorithms, handling dynamic graph changes, incorporating transfer learning, advanced conflict resolution strategies, and domain-specific RL models. Interactive visualization tools, benchmarking datasets, and human-in-the-loop RL approaches are crucial for effective evaluation and real-world applicability
